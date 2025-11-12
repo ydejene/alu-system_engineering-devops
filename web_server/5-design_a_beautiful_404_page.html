@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>404 - Page Not Found</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    body {
+      margin: 0; padding: 0; height: 100vh;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #0f3460; font-family: 'Press Start 2P', cursive;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; overflow: hidden;
+    }
+    .glitch { font-size: 4rem; color: #e94560; text-shadow: 0 0 10px #e94560; animation: glitch 2s infinite; }
+    @keyframes glitch {
+      0%,100% { text-shadow: 0 0 10px #e94560; transform: translate(0); }
+      20% { text-shadow: -5px 0 #0f3460, 5px 0 #e94560; transform: translate(-5px, -5px); }
+      40% { text-shadow: 5px 0 #0f3460, -5px 0 #e94560; transform: translate(5px, 5px); }
+    }
+    p { margin-top: 2rem; font-size: 1.2rem; color: #eeeeee; }
+    .hidden { font-size: 0.8rem; color: #555; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <h1 class="glitch">404</h1>
+  <p>Oops! The page you're looking for has vanished into the digital void.</p>
+  <div class="hidden">Ceci n'est pas une page</div>
+</body>
+</html>
