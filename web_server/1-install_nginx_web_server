@@ -38,6 +38,8 @@ nignx -t
 
 # Restart Nginx (using command other than systemctl) 
 service nginx restart
+service nginx restart
+
 # Or: /etc/init.d/nginx restart
 
 #deubugging
