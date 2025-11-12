@@ -9,8 +9,6 @@ apt-get update
 # Install Nginx (-y makes it non-interactive as we are automating the process)
 apt-get install -y nginx
 
-sudo ufw allow 'Nginx HTTP'
-
 # ensure the directories exist
 mkdir -p /var/www/html
 
@@ -36,7 +34,7 @@ server {
 EOF
 
 # test Config syntax
-nignx -t
+nginx -t
 
 # Restart Nginx (using command other than systemctl) 
 service nginx restart
