@@ -7,6 +7,9 @@ set -e # fail fast, fail loud (on any error)
 apt-get update
 apt-get install -y nginx
 
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/default
+
 # Ensure web root exists
 mkdir -p /var/www/html
 echo 'Holberton School for the win!' > /var/www/html/index.html
