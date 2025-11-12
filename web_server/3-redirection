@@ -33,8 +33,6 @@ server {
 }
 EOF
 
-# Test config
 nginx -t
 
-# Restart
 service nginx restart
