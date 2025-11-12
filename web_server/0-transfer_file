@@ -3,7 +3,7 @@
 
 # Check for exactly 4 arguments
 if [ $# -ne 4 ]; then
-    echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    echo "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
     exit 1
 fi
 
@@ -18,10 +18,12 @@ if [ ! -f "$FILE_PATH" ]; then
     exit 1
 fi
 
-# Transfer with strict host key checking disabled
-scp -o StrictHostKeyChecking=no -i "$SSH_KEY" "$FILE_PATH" "$USERNAME@$SERVER_IP":~/
+# the colon : separates the local and remote location here remote location is hard coded as :~/
+# We transfer the file with strict host key checking disabled because in CI/CD we don't want interactive prompts such as confirmation of adding a new host key
+scp -o StrictHostKeyChecking=no -i "$SSH_KEY" "$FILE_PATH" "$USERNAME@$SERVER_IP":~/ # we put the arguments inside double quotes for safetguard incase there are some characters like * $ for the shell not to interpret it, tells it to treat it just as one argument is passed rather. By default it will overwrite if the file already exits. idempotent via overwrite
 
-# Check scp exit code
+# Check scp (secure copy) exit code 
+# scp is a command to securely transfer files between two locations (local and remote computers). It uses ssh for authentication and encryption as well making safer than the old FTP. It works both direction from local to remote and vice versa. Can transfer files between two remote computers (the data tipically will route through my local machine by default).
 if [ $? -eq 0 ]; then
     echo "File transferred successfully to $USERNAME@$SERVER_IP:~/"
 else
