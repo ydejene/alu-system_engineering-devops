@@ -1,11 +1,53 @@
 #!/usr/bin/env bash
-# Installs Nginx with the following configurations:
-#+    Listens on port 80.
-#+    Returns a page containing "Holberton School" when queried
-#++    at the root with a curl GET request.
+# Installs and configures Nginx to serve a static html page with a texy "Holberton School for the win!"
 
-apt-get update -y
-apt-get install nginx -y 
+set -e # fail fast, fail loud (on any error)
+
+# Update package list (we use apt-get as it is legacy and helps in maintaining old versions unlike the latest apt)
+apt-get update 
+
+# Install Nginx (-y makes it non-interactive as we are automating the process)
+apt-get install -y nginx
+
 sudo ufw allow 'Nginx HTTP'
-sh -c 'echo "Holberton School" > /var/www/html/index.html'
+
+# ensure the directories exist
+mkdir -p /var/www/html
+
+# Create custom page (simple index.html) which overtakes the default nginx page 
+# overwrties it every time  
+echo "Holberton School for the win!" > /var/www/html/index.html
+
+# Ensure Nginx listens on port 80 (default config should already do this but for safeguard)
+cat > /etc/nginx/sites-available/default << 'EOF'
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+EOF
+
+# test Config syntax
+nignx -t
+
+# Restart Nginx (using command other than systemctl) 
 service nginx restart
+# Or: /etc/init.d/nginx restart
+
+#deubugging
+# sleep 1
+# if curl -s http://localhost | grep -q "Holberton School"; then
+#     echo "Success: Nginx is serving the correct page"
+# else
+#     echo "Failed: Page does not contain 'Holberton School'"
+#     exit 1
+# fi
+
