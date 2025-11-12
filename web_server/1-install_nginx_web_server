@@ -4,7 +4,7 @@
 set -e # fail fast, fail loud (on any error)
 
 # Update package list (we use apt-get as it is legacy and helps in maintaining old versions unlike the latest apt)
-apt-get update
+apt-get update -y
 
 # Install Nginx (-y makes it non-interactive as we are automating the process)
 apt-get install -y nginx

@@ -24,9 +24,11 @@ scp -o StrictHostKeyChecking=no -i "$SSH_KEY" "$FILE_PATH" "$USERNAME@$SERVER_IP
 
 # Check scp (secure copy) exit code 
 # scp is a command to securely transfer files between two locations (local and remote computers). It uses ssh for authentication and encryption as well making safer than the old FTP. It works both direction from local to remote and vice versa. Can transfer files between two remote computers (the data tipically will route through my local machine by default).
-if [ $? -eq 0 ]; then
-    echo "File transferred successfully to $USERNAME@$SERVER_IP:~/"
-else
-    echo "File transfer failed."
-    exit 1
-fi
+
+# deubugging 
+# if [ $? -eq 0 ]; then
+#     echo "File transferred successfully to $USERNAME@$SERVER_IP:~/"
+# else
+#     echo "File transfer failed."
+#     exit 1
+# fi
