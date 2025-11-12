@@ -4,15 +4,15 @@
 set -e # fail fast, fail loud (on any error)
 
 # Install Nginx if missing
-sudo apt-get update
-sudo apt-get install -y nginx
+apt-get update
+apt-get install -y nginx
 
 # Ensure web root exists
-sudo mkdir -p /var/www/html
+mkdir -p /var/www/html
 echo 'Holberton School for the win!' > /var/www/html/index.html
 
 # Full config with redirect
-sudo cat > /etc/nginx/sites-available/default << 'EOF'
+cat > /etc/nginx/sites-available/default << 'EOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -34,7 +34,7 @@ server {
 EOF
 
 # Test config
-sudo nginx -t
+nginx -t
 
 # Restart
-sudo service nginx restart
+service nginx restart
