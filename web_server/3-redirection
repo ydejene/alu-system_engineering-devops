@@ -4,15 +4,15 @@
 set -e # fail fast, fail loud (on any error)
 
 # Install Nginx if missing
-apt-get update
-apt-get install -y nginx
+sudo apt-get update
+sudo apt-get install -y nginx
 
 # Ensure web root exists
-mkdir -p /var/www/html
+sudo mkdir -p /var/www/html
 echo 'Holberton School for the win!' > /var/www/html/index.html
 
 # Full config with redirect
-cat > /etc/nginx/sites-available/default << 'EOF'
+sudo cat > /etc/nginx/sites-available/default << 'EOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -23,7 +23,7 @@ server {
     server_name _;
 
     # 301 Redirect
-    location = /redirect_me {
+    location /redirect_me {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
 
@@ -34,7 +34,7 @@ server {
 EOF
 
 # Test config
-nginx -t
+sudo nginx -t
 
 # Restart
-service nginx restart
+sudo service nginx restart
