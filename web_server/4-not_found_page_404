@@ -6,6 +6,9 @@ set -e
 apt-get update
 apt-get install -y nginx
 
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/default
+
 mkdir -p /var/www/html
 echo 'Holberton School for the win!' > /var/www/html/index.html
 
@@ -47,5 +50,5 @@ server {
 EOF
 
 nginx -t
+
 service nginx restart
-EOF
