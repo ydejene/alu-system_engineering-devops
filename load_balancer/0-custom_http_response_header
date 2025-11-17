@@ -37,4 +37,3 @@ nginx -t
 
 # Restart
 service nginx restart
-EOF
