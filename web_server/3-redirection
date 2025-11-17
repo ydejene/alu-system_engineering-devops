@@ -1,40 +1,25 @@
 #!/usr/bin/env bash
-# Configures Nginx with 301 redirect for /redirect_me
+# redirection
+sudo apt-get update -y
+sudo apt-get install -y nginx
 
-set -e # fail fast, fail loud (on any error)
-
-# Install Nginx if missing
-apt-get update
-apt-get install -y nginx
-
-# Ensure web root exists
-mkdir -p /var/www/html
-echo 'Holberton School for the win!' > /var/www/html/index.html
-
-# Full config with redirect
-cat > /etc/nginx/sites-available/default << 'EOF'
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html;
-
-    server_name _;
-
-    # 301 Redirect
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
+config=\
+"server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location / {
+		try_files \$uri \$uri/ =404;
+        }
+	location /redirect_me {
+		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+	}
 }
-EOF
+"
+echo "Holberton School for the win!" > /var/www/html/index.html
+echo "$config" > /etc/nginx/sites-available/default
 
-# Test config
-nginx -t
-
-# Restart
-service nginx restart
+sudo nginx -t
+sudo service nginx restart
