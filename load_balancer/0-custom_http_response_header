@@ -1,42 +1,17 @@
 #!/usr/bin/env bash
-# Configures Nginx with custom X-Served-By header on a new Ubuntu server
-
-set -e
-
-# Install Nginx
-apt-get update -y
-apt-get install -y nginx
-
-# ensure the directories exist
-mkdir -p /var/www/html
-
-# Create simple page
-echo "Holberton School for the win!" > /var/www/html/index.html
-
-# Get hostname
-HOSTNAME=$(hostname)
-
-# Configure Nginx with custom header
-cat > /etc/nginx/sites-available/default << 'EOF'
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html;
-
-    server_name _;
-
-    add_header X-Served-By $HOSTNAME;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
+#installing Nginx and configuring it
+sudo apt update -y # update package manager to get the latest updates when installing nginx.
+sudo apt install nginx -y # install nginx
+new_config=\
+"server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+		root /var/www/html;
+	index index.html index.html index.nginx-debian.html;
+	server_name _;
+	add_header X-Served-By $HOSTNAME;
 }
-EOF
-
-# Test config
-nginx -t
-
-# Restart
-service nginx restart
+"
+sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/default # change ownership
+echo "$new_config" > /etc/nginx/sites-available/default # overwrite the existing configuration
+sudo service nginx restart # restart the nginx
