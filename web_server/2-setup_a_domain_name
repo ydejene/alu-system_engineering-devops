@@ -1,4 +1,2 @@
-#!/usr/bin/env bash
-# Outputs my domain name configured to point to web-01
-
-echo "yonasdejene.tech"
+# my domain name configured to point to web-01
+yonasdejene.tech
