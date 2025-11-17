@@ -13,4 +13,4 @@ new_config=\
 }
 "
 echo "$new_config" > /etc/nginx/sites-available/default # overwrite the existing configuration
-sudo service nginx restart # restart the nginx
+sudo service nginx restart 
