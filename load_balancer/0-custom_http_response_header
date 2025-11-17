@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Configures Nginx with custom X-Served-By header on a new Ubuntu server
+
+set -e
+
+# Install Nginx
+apt-get update
+apt-get install -y nginx
+
+# Create simple page
+echo "Holberton School" > /var/www/html/index.html
+
+# Get hostname
+HOSTNAME=$(hostname)
+
+# Configure Nginx with custom header
+cat > /etc/nginx/sites-available/default << EOF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html;
+
+    server_name _;
+
+    add_header X-Served-By "$HOSTNAME";
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Test config
+nginx -t
+
+# Restart
+service nginx restart
+EOF
