@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Configures UFW firewall to block all incoming traffic except SSH, HTTP and HTTPS
+
+apt-get update
+apt-get install -y ufw
+
+# Set default policies
+ufw default deny incoming
+ufw default allow outgoing
+
+# Allow only the required ports
+ufw allow 22/tcp      # SSH
+ufw allow 80/tcp      # HTTP
+ufw allow 443/tcp     # HTTPS
+
+# Enable UFW 
+ufw enable
+
+ufw status verbose
